@@ -1,0 +1,114 @@
+@import "tailwindcss";
+
+/* ---------- Tema 1000 Giros ---------- */
+@theme {
+  --color-bg: #0a0a0a;
+  --color-surface: #141414;
+  --color-surface-2: #1c1c1c;
+  --color-line: #2a2a2a;
+  --color-muted: #a3a3a3;
+
+  --color-primary: #e10600;
+  --color-primary-hover: #ff1a1a;
+  --color-primary-dark: #4a0a0a;
+  --color-primary-darker: #2a0505;
+
+  --color-whatsapp: #25d366;
+}
+
+/* Fontes vêm do next/font (variáveis definidas no <html>). */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow), "Arial Narrow", ui-sans-serif, sans-serif;
+}
+
+/* Títulos: condensada, itálica, extra bold, caixa alta. */
+@utility font-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: #fff;
+  }
+
+  ::selection {
+    background-color: var(--color-primary);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* ---------- Transição entre páginas (React <ViewTransition>) ---------- */
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(.page-exit) {
+  animation: 150ms ease-in both vt-fade reverse;
+}
+
+::view-transition-new(.page-enter) {
+  animation:
+    260ms ease-out 120ms both vt-fade,
+    420ms cubic-bezier(0.2, 0.8, 0.2, 1) both vt-rise;
+}
+
+@keyframes vt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vt-rise {
+  from {
+    translate: 0 16px;
+  }
+  to {
+    translate: 0 0;
+  }
+}
+
+/* Header e botão flutuante ficam parados durante a transição. */
+::view-transition-group(site-header),
+::view-transition-group(whatsapp-float) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header),
+::view-transition-old(whatsapp-float) {
+  display: none;
+}
+::view-transition-new(site-header),
+::view-transition-new(whatsapp-float) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
