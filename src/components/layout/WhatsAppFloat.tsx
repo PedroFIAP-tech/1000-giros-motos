@@ -17,7 +17,7 @@ export function WhatsAppFloat() {
       rel="noopener noreferrer"
       aria-label="Fale com a gente no WhatsApp"
       style={{ viewTransitionName: "whatsapp-float" }}
-      className="group fixed bottom-[calc(var(--float-offset,0px)+20px)] right-5 z-40 inline-flex size-14 items-center justify-center rounded-md bg-primary text-white shadow-[0_10px_24px_-8px_rgba(229,22,29,0.7)] transition-colors hover:bg-primary-hover hover:text-white md:bottom-[calc(var(--float-offset,0px)+24px)] md:right-6"
+      className="group fixed bottom-[calc(var(--float-offset,0px)+20px)] right-5 z-40 inline-flex size-14 items-center justify-center rounded-md bg-primary text-white shadow-[0_10px_24px_-8px_rgba(229,22,29,0.7)] transition-colors hover:bg-primary-hover hover:text-white md:bottom-6 md:right-6"
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: 0.8, type: "spring", stiffness: 260, damping: 18 }}

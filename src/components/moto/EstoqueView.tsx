@@ -138,7 +138,7 @@ export function EstoqueView({ motos, initialFilters = defaultFilters, initialOrd
         />
       </div>
 
-      <section ref={resultsRef} aria-label="Motos" className="flex min-w-0 scroll-mt-24 flex-col gap-5">
+      <section ref={resultsRef} aria-label="Motos" className="flex min-w-0 flex-col gap-5">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/7 pb-4">
           <p className="text-[15px] text-soft" aria-live="polite">
             <strong className="text-lg text-white">{results.length}</strong>{" "}

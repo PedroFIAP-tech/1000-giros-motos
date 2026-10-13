@@ -1,3 +1,4 @@
+import { ViewTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -63,14 +64,16 @@ export function MotoCard({ moto, list = false, showSelo = true }: MotoCardProps)
   return (
     <article className="h-full overflow-hidden rounded-lg border border-white/8 bg-surface transition-[transform,border-color,box-shadow] duration-250 ease-out hover:-translate-y-1 hover:border-primary/60 hover:shadow-[0_18px_40px_-12px_rgba(229,22,29,0.35)]">
       <div className="relative aspect-[175/131] overflow-hidden bg-surface-3">
-        <Link href={href} tabIndex={-1} aria-hidden="true">
-          <Image
-            src={moto.imagem}
-            alt={nome}
-            fill
-            sizes="(min-width: 760px) 280px, 50vw"
-            className="object-cover"
-          />
+        <Link href={href} prefetch tabIndex={-1} aria-hidden="true">
+          <ViewTransition name={`moto-${moto.slug}`} share="morph" default="none">
+            <Image
+              src={moto.imagem}
+              alt={nome}
+              fill
+              sizes="(min-width: 760px) 280px, 50vw"
+              className="object-cover"
+            />
+          </ViewTransition>
         </Link>
         <FavoriteButton
           slug={moto.slug}
@@ -89,6 +92,7 @@ export function MotoCard({ moto, list = false, showSelo = true }: MotoCardProps)
         <p className="mt-3 text-[19px] font-bold">{formatPrice(moto.preco)}</p>
         <Link
           href={href}
+          prefetch
           className="mt-3 flex h-9 items-center justify-center gap-1.5 rounded bg-primary text-xs font-bold uppercase tracking-[0.02em] text-white transition-colors duration-200 hover:bg-primary-hover hover:text-white"
         >
           Ver detalhes

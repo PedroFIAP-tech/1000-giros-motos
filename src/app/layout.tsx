@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${barlow.variable} ${barlowCondensed.variable}`}>
+    <html lang="pt-BR" data-scroll-behavior="smooth" className={`${barlow.variable} ${barlowCondensed.variable}`}>
       <body className="flex min-h-dvh flex-col bg-bg font-sans text-ink antialiased">
         <MotionProvider>{children}</MotionProvider>
       </body>

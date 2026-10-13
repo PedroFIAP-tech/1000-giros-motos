@@ -70,6 +70,11 @@
     line-height: normal;
     color-scheme: dark;
     scroll-behavior: smooth;
+    /* Âncoras e rolagem da navegação param abaixo do header fixo. */
+    scroll-padding-top: 4rem;
+    @media (width >= 64rem) {
+      scroll-padding-top: 4.5rem;
+    }
   }
 
   body {
@@ -143,6 +148,19 @@
 ::view-transition-new(site-header),
 ::view-transition-new(whatsapp-float) {
   animation: none;
+}
+
+/* Foto do card → galeria da moto (shared element). */
+::view-transition-group(.morph) {
+  animation-duration: 400ms;
+}
+::view-transition-image-pair(.morph) {
+  animation-name: via-blur;
+}
+@keyframes via-blur {
+  30% {
+    filter: blur(3px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
