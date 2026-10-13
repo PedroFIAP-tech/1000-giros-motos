@@ -6,16 +6,14 @@ import { Eyebrow } from "@/components/ui/SectionTitle";
 import { siteConfig } from "@/lib/config";
 import { whatsappLink } from "@/lib/whatsapp";
 
-const mapSrc = `https://maps.google.com/maps?q=${encodeURIComponent(
-  `${siteConfig.address.street}, ${siteConfig.address.city}`,
-)}&z=14&output=embed`;
+const mapQuery = encodeURIComponent(`${siteConfig.address.street}, ${siteConfig.address.city}`);
 
 /** Mapa escurecido do Google (mesmo filtro do design). */
-export function MapEmbed({ className }: { className?: string }) {
+export function MapEmbed({ className, zoom = 14 }: { className?: string; zoom?: number }) {
   return (
     <iframe
       title={`Mapa: ${siteConfig.name}`}
-      src={mapSrc}
+      src={`https://maps.google.com/maps?q=${mapQuery}&z=${zoom}&output=embed`}
       loading="lazy"
       className={className}
       style={{ border: 0, filter: "invert(.92) hue-rotate(180deg) saturate(.6) contrast(.9)" }}
