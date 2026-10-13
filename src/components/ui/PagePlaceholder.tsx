@@ -19,7 +19,7 @@ export function PagePlaceholder({
         aria-hidden="true"
         className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top_right,rgba(225,6,0,0.18),transparent_60%)]"
       />
-      <div className="mx-auto flex min-h-[70dvh] max-w-7xl flex-col justify-center px-4 pb-20 pt-32 sm:px-6 lg:px-8">
+      <div className="mx-auto flex min-h-[70dvh] max-w-7xl flex-col justify-center px-4 py-20 sm:px-6 lg:px-8">
         <p className="mb-4 flex items-center gap-3 font-display text-sm font-bold uppercase tracking-widest text-primary">
           <span aria-hidden="true" className="h-0.5 w-8 bg-primary" />
           {eyebrow}

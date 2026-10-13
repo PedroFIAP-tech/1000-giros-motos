@@ -1,16 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
-import { Button } from "@/components/ui/Button";
-import { ChevronDownIcon, CloseIcon, MapPinIcon, PhoneIcon, WhatsAppIcon } from "@/components/ui/icons";
-import { Logo } from "@/components/ui/Logo";
+import { ChevronRight } from "lucide-react";
+import { WhatsAppIcon } from "@/components/ui/icons";
 import { siteConfig } from "@/lib/config";
-import { isActivePath, mainNav, type NavItem } from "@/lib/navigation";
+import { isActivePath, mainNav } from "@/lib/navigation";
 import { whatsappLink } from "@/lib/whatsapp";
 import { cn } from "@/lib/utils";
-import { SocialLinks } from "./SocialLinks";
 
 type MobileMenuProps = {
   open: boolean;
@@ -18,25 +16,13 @@ type MobileMenuProps = {
   pathname: string;
 };
 
-const listVariants = {
-  open: { transition: { staggerChildren: 0.05, delayChildren: 0.12 } },
-  closed: {},
-};
-
-const itemVariants = {
-  open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, x: 24 },
-};
-
+/** Painel do menu mobile: abre logo abaixo do header, ocupando a tela. */
 export function MobileMenu({ open, onClose, pathname }: MobileMenuProps) {
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-
-  // Trava o scroll do fundo, fecha com Esc e leva o foco para dentro do painel.
+  // Trava o scroll do fundo e fecha com Esc.
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    closeButtonRef.current?.focus();
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -51,186 +37,68 @@ export function MobileMenu({ open, onClose, pathname }: MobileMenuProps) {
   return (
     <AnimatePresence>
       {open && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
-          <motion.div
-            aria-hidden="true"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            onClick={onClose}
-          />
-
-          <motion.div
-            id="menu-mobile"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Menu"
-            className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-line bg-bg shadow-2xl"
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 380, damping: 38 }}
-          >
-            <div className="flex h-16 items-center justify-between border-b border-line px-4">
-              <Logo onClick={onClose} />
-              <button
-                ref={closeButtonRef}
-                type="button"
-                onClick={onClose}
-                aria-label="Fechar menu"
-                className="-mr-2 inline-flex size-11 items-center justify-center rounded-md hover:bg-white/10"
-              >
-                <CloseIcon className="size-6" />
-              </button>
-            </div>
-
-            <nav aria-label="Principal" className="flex-1 overflow-y-auto px-4 py-6">
-              <motion.ul variants={listVariants} initial="closed" animate="open" className="space-y-1">
-                {mainNav.map((item) => (
-                  <motion.li key={item.href} variants={itemVariants}>
-                    {item.children ? (
-                      <Accordion item={item} pathname={pathname} onNavigate={onClose} />
-                    ) : (
-                      <MobileLink
-                        href={item.href}
-                        active={isActivePath(pathname, item.href)}
-                        onNavigate={onClose}
-                      >
-                        {item.label}
-                      </MobileLink>
-                    )}
-                  </motion.li>
-                ))}
-              </motion.ul>
-            </nav>
-
-            <div className="space-y-5 border-t border-line px-4 py-6">
-              <Button href={whatsappLink()} external className="w-full" onClick={onClose}>
-                <WhatsAppIcon className="size-5" />
-                Fale no WhatsApp
-              </Button>
-              <div className="space-y-3 text-sm text-muted">
-                <a href={siteConfig.phone.href} className="flex items-center gap-3 hover:text-white">
-                  <PhoneIcon className="size-4 shrink-0 text-primary" />
-                  {siteConfig.phone.display}
-                </a>
-                <a
-                  href={siteConfig.address.mapsUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-start gap-3 hover:text-white"
+        <motion.nav
+          id="menu-mobile"
+          aria-label="Principal"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="absolute inset-x-0 top-full flex h-[calc(100dvh-4rem)] flex-col gap-1 overflow-y-auto border-t border-white/7 bg-bg px-[18px] pb-7 pt-5 lg:hidden"
+        >
+          {mainNav.map((item) => {
+            const active = isActivePath(pathname, item.href);
+            const href = item.children ? item.children[0].href : item.href;
+            return (
+              <div key={item.href}>
+                <Link
+                  href={href}
+                  onClick={onClose}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "flex items-center justify-between border-b border-white/7 px-1 py-3.5 font-title text-[28px] leading-[normal]",
+                    active ? "text-white hover:text-white" : "text-[#c4c4c8] hover:text-[#c4c4c8]",
+                  )}
                 >
-                  <MapPinIcon className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <span>
-                    {siteConfig.address.street}
-                    <br />
-                    {siteConfig.address.city} - {siteConfig.address.state}
-                  </span>
-                </a>
+                  {item.label}
+                  <ChevronRight className="size-5 text-primary" />
+                </Link>
+                {item.children && (
+                  <div className="grid grid-cols-2 gap-2 py-3">
+                    {item.children.map(({ href: childHref, label, icon: Icon }) => (
+                      <Link
+                        key={childHref}
+                        href={childHref}
+                        onClick={onClose}
+                        aria-current={isActivePath(pathname, childHref) ? "page" : undefined}
+                        className="flex items-center gap-2 rounded-lg border border-white/8 bg-surface-2 p-3 text-sm"
+                      >
+                        {Icon && <Icon className="size-[18px] shrink-0 text-primary" />}
+                        {label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
               </div>
-              <SocialLinks />
-            </div>
-          </motion.div>
-        </div>
+            );
+          })}
+
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={onClose}
+            className="mt-5 flex h-[52px] shrink-0 items-center justify-center gap-2.5 rounded-lg bg-primary font-cta text-lg text-white hover:text-white"
+          >
+            <WhatsAppIcon className="size-5" />
+            Fale no WhatsApp
+          </a>
+          <p className="mt-4 text-[13px] leading-[1.6] text-muted">
+            {siteConfig.phone.display} · {siteConfig.address.street} — {siteConfig.address.city},{" "}
+            {siteConfig.address.state}
+          </p>
+        </motion.nav>
       )}
     </AnimatePresence>
-  );
-}
-
-function MobileLink({
-  href,
-  active,
-  onNavigate,
-  children,
-}: {
-  href: string;
-  active: boolean;
-  onNavigate: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <Link
-      href={href}
-      onClick={onNavigate}
-      aria-current={active ? "page" : undefined}
-      className={cn(
-        "flex items-center gap-3 rounded-md px-3 py-3 font-title text-3xl transition-colors",
-        active ? "text-primary" : "text-white hover:bg-white/5",
-      )}
-    >
-      {active && <span aria-hidden="true" className="h-6 w-1 rounded-full bg-primary" />}
-      {children}
-    </Link>
-  );
-}
-
-function Accordion({
-  item,
-  pathname,
-  onNavigate,
-}: {
-  item: NavItem;
-  pathname: string;
-  onNavigate: () => void;
-}) {
-  const active = isActivePath(pathname, item.href);
-  const [expanded, setExpanded] = useState(active);
-  const panelId = `mobile-submenu-${item.href.replace(/\W/g, "")}`;
-
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        aria-controls={panelId}
-        className={cn(
-          "flex w-full items-center justify-between gap-3 rounded-md px-3 py-3 font-title text-3xl transition-colors hover:bg-white/5",
-          active ? "text-primary" : "text-white",
-        )}
-      >
-        <span className="flex items-center gap-3">
-          {active && <span aria-hidden="true" className="h-6 w-1 rounded-full bg-primary" />}
-          {item.label}
-        </span>
-        <ChevronDownIcon
-          className={cn("size-6 transition-transform duration-200", expanded && "rotate-180")}
-        />
-      </button>
-
-      <AnimatePresence initial={false}>
-        {expanded && (
-          <motion.ul
-            id={panelId}
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-            className="ml-4 overflow-hidden border-l border-line"
-          >
-            {item.children?.map((child) => {
-              const childActive = isActivePath(pathname, child.href);
-              return (
-                <li key={child.href}>
-                  <Link
-                    href={child.href}
-                    onClick={onNavigate}
-                    aria-current={childActive ? "page" : undefined}
-                    className={cn(
-                      "block py-2.5 pl-5 text-lg font-medium transition-colors",
-                      childActive ? "text-primary" : "text-white/80 hover:text-white",
-                    )}
-                  >
-                    {child.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </motion.ul>
-        )}
-      </AnimatePresence>
-    </div>
   );
 }
