@@ -152,6 +152,16 @@
   animation: none;
 }
 
+/* 404: faixa tracejada da pista correndo (um ciclo = 70px do padrão). */
+@keyframes road-dash {
+  from {
+    transform: translateX(-70px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
 /* Foto do card → galeria da moto (shared element). */
 ::view-transition-group(.morph) {
   animation-duration: 400ms;
