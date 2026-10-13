@@ -1,18 +1,19 @@
 import type { Metadata, Viewport } from "next";
-import { Barlow_Condensed, Inter } from "next/font/google";
+import { Barlow, Barlow_Condensed } from "next/font/google";
 import { MotionProvider } from "@/components/MotionProvider";
 import { siteConfig } from "@/lib/config";
 import "./globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const barlow = Barlow_Condensed({
+const barlow = Barlow({
   variable: "--font-barlow",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
+  weight: ["400", "500", "600", "700"],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  variable: "--font-barlow-condensed",
+  subsets: ["latin"],
+  weight: ["600", "700", "800", "900"],
   style: ["normal", "italic"],
 });
 
@@ -25,13 +26,13 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#0a0a0b",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="pt-BR" className={`${inter.variable} ${barlow.variable}`}>
-      <body className="flex min-h-dvh flex-col bg-bg font-sans text-white antialiased">
+    <html lang="pt-BR" className={`${barlow.variable} ${barlowCondensed.variable}`}>
+      <body className="flex min-h-dvh flex-col bg-bg font-sans text-ink antialiased">
         <MotionProvider>{children}</MotionProvider>
       </body>
     </html>

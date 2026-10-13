@@ -55,7 +55,7 @@ export function Header() {
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:h-20 lg:px-8">
-          <Logo />
+          <Logo preload />
 
           <Suspense fallback={<DesktopNav pathname="" />}>
             <ActiveDesktopNav />
@@ -65,10 +65,8 @@ export function Header() {
             <Button
               href={whatsappLink()}
               external
-              variant="outline-primary"
-              size="sm"
-              pill
-              className="hidden font-sans not-italic normal-case tracking-normal sm:inline-flex"
+              variant="whatsapp"
+              className="hidden sm:inline-flex"
             >
               <WhatsAppIcon className="size-4" />
               Fale no WhatsApp

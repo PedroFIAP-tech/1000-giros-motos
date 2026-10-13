@@ -48,7 +48,7 @@ export default function NotFound() {
               Ver estoque
               <ArrowRightIcon className="size-5" />
             </Button>
-            <Button href={whatsappLink()} external variant="outline">
+            <Button href={whatsappLink()} external variant="secondary">
               <WhatsAppIcon className="size-5" />
               Fale no WhatsApp
             </Button>

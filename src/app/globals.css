@@ -1,25 +1,34 @@
 @import "tailwindcss";
 
-/* ---------- Tema 1000 Giros ---------- */
+/* ---------- Tema 1000 Giros (tokens do Claude Design) ---------- */
 @theme {
-  --color-bg: #0a0a0a;
-  --color-surface: #141414;
-  --color-surface-2: #1c1c1c;
-  --color-line: #2a2a2a;
-  --color-muted: #a3a3a3;
+  /* Mesmo ponto de quebra do design (mobile < 760px). */
+  --breakpoint-md: 47.5rem;
 
-  --color-primary: #e10600;
-  --color-primary-hover: #ff1a1a;
-  --color-primary-dark: #4a0a0a;
-  --color-primary-darker: #2a0505;
+  --color-bg: #0a0a0b;
+  --color-bg-alt: #0d0d0f;
+  --color-surface: #121215;
+  --color-surface-2: #141417;
+  --color-surface-3: #1b1b1f;
+  --color-field: #0b0b0d;
+  --color-line: rgb(255 255 255 / 0.08);
 
-  --color-whatsapp: #25d366;
+  --color-ink: #f4f4f5;
+  --color-soft: #d4d4d8;
+  --color-muted: #a1a1aa;
+  --color-dim: #71717a;
+
+  --color-primary: #e5161d;
+  --color-primary-hover: #ff2a31;
+  --color-danger: #ff4d53;
+  --color-success: oklch(0.78 0.14 150);
+  --color-warning: oklch(0.8 0.14 80);
 }
 
 /* Fontes vêm do next/font (variáveis definidas no <html>). */
 @theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-barlow), "Arial Narrow", ui-sans-serif, sans-serif;
+  --font-sans: var(--font-barlow), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", ui-sans-serif, sans-serif;
 }
 
 /* Títulos: condensada, itálica, extra bold, caixa alta. */
@@ -29,7 +38,21 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  line-height: 0.95;
+  line-height: 0.92;
+}
+
+/* Texto de botão: condensada bold, caixa alta (sem itálico). */
+@utility font-cta {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* Largura e respiro lateral das seções do design. */
+@utility container-site {
+  max-width: 1240px;
+  margin-inline: auto;
+  padding-inline: 24px;
 }
 
 @layer base {
@@ -40,7 +63,16 @@
 
   body {
     background-color: var(--color-bg);
-    color: #fff;
+    color: var(--color-ink);
+  }
+
+  /* Como no design: link sem cor própria fica vermelho no hover. */
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  input[type="range"] {
+    accent-color: var(--color-primary);
   }
 
   ::selection {

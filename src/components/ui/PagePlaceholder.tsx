@@ -27,7 +27,7 @@ export function PagePlaceholder({
         <h1 className="font-title text-5xl sm:text-6xl lg:text-7xl">{title}</h1>
         <p className="mt-6 max-w-xl text-lg text-muted">{description}</p>
         <div className="mt-10">
-          <Button href="/" variant="outline">
+          <Button href="/" variant="secondary">
             Voltar para a home
             <ArrowRightIcon className="size-4" />
           </Button>
