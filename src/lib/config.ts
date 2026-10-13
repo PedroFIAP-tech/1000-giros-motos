@@ -21,6 +21,15 @@ export const siteConfig = {
     href: "tel:+5511960388509",
   },
 
+  email: "contato@1000giros.com.br",
+
+  hours: {
+    weekdays: "Seg–Sex 9h às 18h",
+    saturday: "Sábado 9h às 14h",
+    /** Versão em uma linha (seção "Visite a gente" do Sobre). */
+    short: "Seg a sex 9h–18h · Sáb 9h–14h",
+  },
+
   address: {
     street: "Rodovia Salvador de Leone, 2030",
     neighborhood: "Embu Mirim",
