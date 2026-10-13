@@ -59,5 +59,20 @@ export function useFavorites() {
 
   const isFavorite = useCallback((slug: string) => favorites.includes(slug), [favorites]);
 
-  return { favorites, isFavorite, toggle };
+  const clear = useCallback(() => write([]), []);
+
+  return { favorites, isFavorite, toggle, clear };
+}
+
+/** false no servidor e na hidratação; true depois (evita "piscar" o estado vazio). */
+export function useHydrated() {
+  return useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+}
+
+function noopSubscribe() {
+  return () => {};
 }
