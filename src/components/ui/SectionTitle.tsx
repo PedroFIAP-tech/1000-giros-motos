@@ -21,6 +21,9 @@ export function Hl({ children }: { children: ReactNode }) {
   return <span className="text-primary">{children}</span>;
 }
 
+/** Título grande das seções institucionais (Sobre, Serviços). */
+export const titleLg = "mt-2.5 text-[clamp(34px,4.6vw,52px)] leading-[0.95]";
+
 type SectionTitleProps = {
   eyebrow?: ReactNode;
   children: ReactNode;
