@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Check, Send } from "lucide-react";
 import type { Campo } from "@/data/servicos";
 import { Field, FieldLabel, fieldClasses } from "@/components/ui/Field";
-import { FileDropzone } from "@/components/ui/FileDropzone";
+import { FileDropzone, type Photo } from "@/components/ui/FileDropzone";
 import { Hl } from "@/components/ui/SectionTitle";
 import { SuccessState } from "@/components/ui/SuccessState";
 import { applyMask, validate } from "@/lib/masks";
@@ -27,7 +27,7 @@ export function ServiceForm({ campos, stockOptions, formT, formHl, cta, ok, intr
   const initial = () =>
     Object.fromEntries(campos.filter((c) => c.fromStock).map((c) => [c.name, stockOptions[0] ?? ""]));
   const [values, setValues] = useState<Record<string, string>>(initial);
-  const [files, setFiles] = useState<File[]>([]);
+  const [photos, setPhotos] = useState<Photo[]>([]);
   const [consent, setConsent] = useState(false);
   const [touched, setTouched] = useState(false);
   const [sentHref, setSentHref] = useState<string | null>(null);
@@ -52,13 +52,13 @@ export function ServiceForm({ campos, stockOptions, formT, formHl, cta, ok, intr
     const fields = Object.fromEntries(
       campos.filter((c) => c.type !== "file").map((c) => [c.label.replace(" / WhatsApp", ""), values[c.name]]),
     );
-    if (files.length) fields.Fotos = `${files.length} (envio por aqui)`;
+    if (photos.length) fields.Fotos = `${photos.length} (envio por aqui)`;
     setSentHref(whatsappLink(formMessage(intro, fields)));
   }
 
   function reset() {
     setValues(initial());
-    setFiles([]);
+    setPhotos([]);
     setConsent(false);
     setTouched(false);
     setSentHref(null);
@@ -104,7 +104,7 @@ export function ServiceForm({ campos, stockOptions, formT, formHl, cta, ok, intr
             return (
               <div key={c.name} className={cn("flex flex-col gap-1.5", span)}>
                 <FieldLabel>{c.label}</FieldLabel>
-                <FileDropzone files={files} onChange={setFiles} />
+                <FileDropzone photos={photos} onChange={setPhotos} />
               </div>
             );
           }

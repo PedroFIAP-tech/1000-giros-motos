@@ -4,6 +4,8 @@
 @theme {
   /* Mesmo ponto de quebra do design (mobile < 760px). */
   --breakpoint-md: 47.5rem;
+  /* O painel admin vira mobile abaixo de 860px. */
+  --breakpoint-admin: 53.75rem;
 
   --color-bg: #0a0a0b;
   --color-bg-alt: #0d0d0f;
