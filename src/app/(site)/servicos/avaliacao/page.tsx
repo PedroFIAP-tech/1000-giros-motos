@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { PagePlaceholder } from "@/components/ui/PagePlaceholder";
+import { ServicePage } from "@/components/sections/ServicePage";
+import { servicos } from "@/data/servicos";
 
 export const metadata: Metadata = {
   title: "Avaliação",
+  description: servicos.avaliacao.sub,
 };
 
-export default function Page() {
-  return <PagePlaceholder eyebrow="Serviços" title={<span className="text-primary">Avaliação</span>} />;
+export default function AvaliacaoPage() {
+  return <ServicePage servico="avaliacao" />;
 }
