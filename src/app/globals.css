@@ -23,6 +23,16 @@
   --color-danger: #ff4d53;
   --color-success: oklch(0.78 0.14 150);
   --color-warning: oklch(0.8 0.14 80);
+
+  /* O design não fixa altura de linha: o texto usa a "normal" da fonte. */
+  --text-xs--line-height: normal;
+  --text-sm--line-height: normal;
+  --text-base--line-height: normal;
+  --text-lg--line-height: normal;
+  --text-xl--line-height: normal;
+  --text-2xl--line-height: normal;
+  --text-3xl--line-height: normal;
+  --text-4xl--line-height: normal;
 }
 
 /* Fontes vêm do next/font (variáveis definidas no <html>). */
@@ -57,6 +67,7 @@
 
 @layer base {
   html {
+    line-height: normal;
     color-scheme: dark;
     scroll-behavior: smooth;
   }
