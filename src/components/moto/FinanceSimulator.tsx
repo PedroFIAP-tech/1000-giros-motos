@@ -78,7 +78,7 @@ export function FinanceSimulator({
               aria-pressed={n === prazo}
               onClick={() => onPrazoChange(n)}
               className={cn(
-                "h-10 rounded-md border font-bold text-white transition-colors",
+                "h-10 rounded-md border text-[13px] font-bold text-white transition-colors",
                 n === prazo ? "border-primary bg-primary" : "border-white/16 bg-transparent",
               )}
             >

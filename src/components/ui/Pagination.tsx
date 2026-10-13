@@ -32,7 +32,7 @@ export function Pagination({
           onClick={() => onChange(n)}
           className={cn(
             box,
-            "font-semibold text-white hover:border-primary",
+            "text-[13px] font-semibold text-white hover:border-primary",
             n === page ? "border-primary bg-primary" : "border-white/12 bg-transparent",
           )}
         >
